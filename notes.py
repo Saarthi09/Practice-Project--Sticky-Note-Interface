@@ -1,13 +1,17 @@
 import json
-
-notes = []
-count = 0
+import os
+if os.path.exists("notes.json"):
+    with open("notes.json", "r") as file:
+        notes = json.load(file)
+else:
+    notes = []
+count = len(notes)
 
 while True:
     count += 1
 
     note_title = input("Title your note (leave blank if none): ")
-    note_text = input("Write a note: ")
+    note_text = input("Write a note (leave blank to quit): ")
 
     if note_text == "":
         break
