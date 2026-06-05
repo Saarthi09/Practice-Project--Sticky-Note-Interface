@@ -17,7 +17,7 @@ while True:
         break
 
     if note_title == "":
-        note_title = str(count)
+        note_title = "note " + str(count)
 
     notes.append({
         "title": note_title,
