@@ -10,5 +10,9 @@
     {
         "title": "test",
         "text": "test 3"
+    },
+    {
+        "title": "test 4",
+        "text": "this must get saved after pressing enter"
     }
 ]
