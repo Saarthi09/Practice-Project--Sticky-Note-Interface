@@ -1,15 +1,25 @@
 import json
 
 notes = []
-while True:
-    note_text = input("Write a note (or 'done'): ")
+count = 0
 
-    if note_text == "done":
+while True:
+    count += 1
+
+    note_title = input("Title your note (leave blank if none): ")
+    note_text = input("Write a note: ")
+
+    if note_text == "":
         break
 
-    notes.append(
-        {
+    if note_title == "":
+        note_title = str(count)
+
+    notes.append({
+        "title": note_title,
         "text": note_text
-        })
+    })
+
 with open("notes.json", "w") as file:
     json.dump(notes, file, indent=4)
+print("Saved")
