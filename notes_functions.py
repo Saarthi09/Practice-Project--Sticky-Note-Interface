@@ -1,5 +1,32 @@
 import json
+def add_note(notes):
+    count = len(notes)
 
+    while True:
+        count += 1
+
+        note_title = input("Title your note (leave blank if none): ")
+        note_text = input("Write a note (leave blank to quit): ")
+
+        if note_text == "":
+            break
+
+        if note_title == "":
+            note_title = "note " + str(count)
+
+        notes.append({
+            "title": note_title,
+            "text": note_text
+        })
+
+        with open("notes.json", "w") as file:
+            json.dump(notes, file, indent=4)
+
+        print("Saved")
+
+        if input("Add another note? (y/n): ").lower() != "y":
+            break
+        
 def view_notes(notes):
     if len(notes) == 0:
         print("No notes found")
