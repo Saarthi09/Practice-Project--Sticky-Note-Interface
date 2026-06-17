@@ -38,4 +38,20 @@ def edit_note(notes):
     except: 
         print("Please enter a valid note number")
 
-        
+def delete_note(notes):
+    if len(notes) ==0:
+        print("No notes found")
+        return
+
+    view_notes(notes)
+
+    try:
+        choice = int(input("Enter note number to delete: ")) -1
+
+        if 0<= choice<len(notes):
+            del notes[choice]
+            with open("notes.json", "w") as file:
+                json.dump(notes, file, indent=4)
+            print(f"Note {choice +1} successfully deleted")
+    except:
+        print("Please enter a valid note number")
