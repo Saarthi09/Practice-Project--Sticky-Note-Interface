@@ -1,32 +1,49 @@
 import json
 import os
+
+from notes_functions import (
+    add_note,
+    view_notes,
+    edit_note,
+    delete_note,
+)
+
 if os.path.exists("notes.json"):
     with open("notes.json", "r") as file:
         notes = json.load(file)
 else:
     notes = []
-count = len(notes)
 
 while True:
-    count += 1
+    print("""
+========= NOTES APP =========
 
-    note_title = input("Title your note (leave blank if none): ")
-    note_text = input("Write a note (leave blank to quit): ")
+1. Add Note
+2. View Notes
+3. Edit Note
+4. Delete Note
+5. Exit
 
-    if note_text == "":
+=============================
+""")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        add_note(notes)
+
+    elif choice == "2":
+        view_notes(notes)
+
+    elif choice == "3":
+        edit_note(notes)
+
+    elif choice == "4":
+        delete_note(notes)
+
+    elif choice == "5":
+        print("Goodbye!")
         break
 
-    if note_title == "":
-        note_title = "note " + str(count)
-
-    notes.append({
-        "title": note_title,
-        "text": note_text
-    })
-
-    with open("notes.json", "w") as file:
-        json.dump(notes, file, indent=4)
-    print("Saved")
-
-    if input("Add another note?(y/n)").lower() != "y":
-        break
+    else:
+        print("Invalid choice.")
