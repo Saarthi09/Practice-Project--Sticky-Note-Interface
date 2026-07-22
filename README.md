@@ -65,9 +65,6 @@ Notes are stored in `sticky_notes_data.json` in the following format:
 }
 ```
 
-## Screenshots
-
-Screenshots can be added here.
 
 ## Future Improvements
 
