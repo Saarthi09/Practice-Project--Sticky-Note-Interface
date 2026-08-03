@@ -13,13 +13,13 @@ class StickyNote:
         self.note_id = note_id
         self.colour = colour
 
-        # --- note window ---
+        
         self.window = tk.Toplevel(app.root)
         self.window.title(f"Note {self.note_id}")
         self.window.geometry("400x400")
         self.window.configure(bg=self.colour)
 
-        # X button should save + close cleanly instead of leaving an orphaned launcher button
+        
         self.window.protocol("WM_DELETE_WINDOW", self.close)
 
         self.text_box = tk.Text(
@@ -51,7 +51,7 @@ class StickyNote:
         )
         self.delete_btn.place(x=320, y=300)
 
-        # --- launcher button in the main window's notes list ---
+        
         self.note_btn = tk.Button(
             app.notes_list_inner,
             text=f"Note {self.note_id}",
@@ -105,8 +105,8 @@ class NotesApp:
         self.root.configure(bg="khaki")
 
         self.next_id = 1
-        self.notes = {}          # note_id -> StickyNote
-        self.notes_data = {}     # note_id (str) -> {"colour": ..., "text": ...}, mirrors disk
+        self.notes = {}         
+        self.notes_data = {}    
 
         self.label = tk.Label(
             self.root,
@@ -141,8 +141,7 @@ class NotesApp:
         )
         self.notes_label.place(x=100, y=250)
 
-        # scrollable list of note launcher buttons, so it never runs out of
-        # room no matter how many notes are created over time
+        
         self.notes_canvas = tk.Canvas(self.root, bg="khaki", highlightthickness=0)
         self.notes_canvas.place(x=100, y=280, width=280, height=290)
 
@@ -159,7 +158,7 @@ class NotesApp:
             "<Configure>",
             lambda e: self.notes_canvas.configure(scrollregion=self.notes_canvas.bbox("all"))
         )
-        # mousewheel scrolling while hovering the list
+        
         self.notes_canvas.bind(
             "<Enter>",
             lambda e: self.notes_canvas.bind_all(
@@ -171,7 +170,7 @@ class NotesApp:
 
         self.load_all()
 
-    # ---------- persistence ----------
+   
 
     def save_all(self):
         try:
@@ -194,11 +193,11 @@ class NotesApp:
         for id_str, info in self.notes_data.items():
             note_id = int(id_str)
             note = StickyNote(self, note_id, info.get("colour", "yellow"), info.get("text", ""))
-            note.window.withdraw()  # only show in the list; user reopens on demand
+            note.window.withdraw()  
             self.notes[note_id] = note
             self.next_id = max(self.next_id, note_id + 1)
 
-    # ---------- note management ----------
+    
 
     def create_note(self, colour):
         note_id = self.next_id
@@ -207,8 +206,7 @@ class NotesApp:
         note = StickyNote(self, note_id, colour)
         self.notes[note_id] = note
 
-        # record it immediately (even before first Save click) so an empty
-        # note isn't lost if the app is closed right after creating it
+       
         self.notes_data[str(note_id)] = {"colour": colour, "text": ""}
         self.save_all()
 
@@ -248,7 +246,7 @@ class NotesApp:
             btn.place(x=x, y=50)
 
     def exit_app(self):
-        # save every currently-open note's latest text before quitting
+       
         for note in list(self.notes.values()):
             note.save(flash=False)
         self.root.destroy()
